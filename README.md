@@ -2,7 +2,7 @@
 
 This repository contains the code for the development of an AI-based web application designed to enhance pre-triage processes in after-hour medical care. The project combines advanced natural language processing capabilities of GPT-3 with user-friendly web technologies to provide an innovative solution to challenges in organized duty centers (ODCs).
 
-The project was created in 2023 as a part of my Thesis for obtaining the Master `Business Engineering, Management Information Systems` at the University of Antwerp. Afterwards, minor updates have been made to the code itself, other than some necessary bug-fixes to keep the prototype allive, which you can visit at[Pretria](https://www.pretria.com). Note that you require an account to access certain functionalities (differential diagnoses, follow-up system, doctor's dashboard, etc.).
+The project was created in 2023 as a part of my Thesis for obtaining the Master `Business Engineering, Management Information Systems` at the University of Antwerp. Afterwards, minor updates have been made to the code itself, other than some necessary bug-fixes to keep the prototype allive, which you can visit at [Pretria](https://www.pretria.com). Note that you require an account to access certain functionalities (differential diagnoses, follow-up system, doctor's dashboard, etc.).
 
 If you wish to gain access to the above features, or wish to receive more information about the Thesis project, don't hesistate to contact me at <bloomer.david@outlook.com>.
 
@@ -10,6 +10,7 @@ If you wish to gain access to the above features, or wish to receive more inform
 
 - [Pretria: AI-Based Web Application for Pre-Triage Using GPT-3](#pretria-ai-based-web-application-for-pre-triage-using-gpt-3)
   - [Table of Contents](#table-of-contents)
+  - [Note](#note)
   - [Overview](#overview)
   - [Motivation](#motivation)
   - [Research Objectives](#research-objectives)
@@ -31,6 +32,10 @@ If you wish to gain access to the above features, or wish to receive more inform
   - [License](#license)
 
 ---
+
+## Note
+
+The below is a summary of my Thesis project, for the full document, you can contact me at <bloomer.david@outlook.com>.
 
 ## Overview
 

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>Bootstrap Login Page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body class="justify-content-center d-flex align-items-center vh-100 bg-secondary">
+
+	<div class="container w-50 card shadow">
+	
+	{% if error %}
+	<div class="alert alert-danger mt-2" role="alert">
+		{{error}}
+	</div>
+	{% endif %}
+	
+	
+	
+    <h1>Select medical practice</h1>
+	<p>If you want to get access to a different medical practice please contact the administrator.</p>
+		<form action="{% url 'select_medical_practice' %}" method="post">
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="username">Medical practice:</label>
+				<div class="mb-3">
+                    <select class="form-select" name='medical_practice'>
+                        {% for e in medical_practice_list %}
+                        <option value="{{e.medical_practice.pk}}">{{e.medical_practice.name}}</option>
+                        
+                        {% endfor %}
+                      </select>
+                </div>
+			</div>
+			
+			<button type="submit" class="btn btn-primary mb-2">Select</button>
+		</form>
+	</div>
+</body>
+</html>

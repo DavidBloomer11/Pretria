@@ -1,0 +1,277 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+
+{% block main %}
+<div class="pagetitle">
+    <h1>Consultation</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'consultations' medical_practice.pk %}">Consultations</a></li>
+        <li class="breadcrumb-item active"></li>
+      </ol>
+    </nav>
+</div>
+
+<div class="card" style="min-height:200px">
+  <div class="card-body">
+    <h5 class="card-title">{{consultation.encounter.patient.first_name}} {{consultation.encounter.patient.last_name}}</h5>
+
+    <!-- Bordered Tabs Justified -->
+    <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+      <li class="nav-item flex-fill" role="presentation">
+        <button class="nav-link w-100 active" id="patient-overview-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-patient-overview" type="button" role="tab" aria-controls="patient-overview" aria-selected="true">Patient Overview</button>
+      </li>
+      <li class="nav-item flex-fill" role="presentation">
+        <button class="nav-link w-100" id="consultation-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-consultation" type="button" role="tab" aria-controls="consultation" aria-selected="false">Consultation</button>
+      </li>
+      <li class="nav-item flex-fill" role="presentation">
+        <button class="nav-link w-100" id="differential-diagnosis-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-differential-diagnosis" type="button" role="tab" aria-controls="differential-diagnosis" aria-selected="false">Differential Diagnosis</button>
+      </li>
+      <li class="nav-item flex-fill" role="presentation">
+        <button class="nav-link w-100" id="digital-anamnesis-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-digital-anamnesis" type="button" role="tab" aria-controls="digital-anamnesis" aria-selected="false">Digital Anamnesis</button>
+      </li>
+      
+    </ul>
+    <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+      <div class="tab-pane fade active show" id="bordered-justified-patient-overview" role="tabpanel" aria-labelledby="patient-overview-tab">
+        
+        <div class="row justify-content-top align-items-top g-2">
+          <div class="col">
+            <h5>Basic information</h5>
+
+        <div class="row">
+          <div class="col-lg-6 col-md-6 fw-bold">First name</div>
+          <div class="col-lg-6 col-md-6">{{consultation.encounter.patient.first_name}}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 col-md-6 fw-bold">Last name</div>
+          <div class="col-lg-6 col-md-6">{{consultation.encounter.patient.last_name}}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 col-md-6 fw-bold">Gender</div>
+          <div class="col-lg-6 col-md-6">{{consultation.encounter.patient.gender}}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 col-md-6 fw-bold">Date of birth</div>
+          <div class="col-lg-6 col-md-6">{{consultation.encounter.patient.date_of_birth}}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 col-md-6 fw-bold">Citizen service number</div>
+          <div class="col-lg-6 col-md-6">{{consultation.encounter.patient.citizen_service_number}}</div>
+        </div>
+          </div>
+          <div class="col">
+            <h5>Complaint</h5>
+
+        <p>{{consultation.encounter.description}}</p>
+          </div>
+          
+        </div>
+
+
+      </div>
+      <div class="tab-pane fade" id="bordered-justified-consultation" role="tabpanel" aria-labelledby="consultation-tab">
+        
+        {% if consultation.datetime_end_consultation == None %}
+
+        <div class="d-grid gap-2 justify-content-center mt-4">
+          <a name="" id="" class="btn btn-primary" href="{% url 'perform_consultation' medical_practice.pk consultation.pk %}" role="button">Start consultation</a>
+        </div>
+
+        
+        {% else %}
+
+        <div class="row align-items-top g-2">
+
+
+          <h5>Basic information</h5>
+
+          <div class="col">
+            <div class="row mb-2">
+              <div class="col-lg-6 col-md-6 fw-bold">Time started</div>
+              <div class="col-lg-6 col-md-6">{{consultation.datetime_start_consultation}}</div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-lg-6 col-md-6 fw-bold">Time ended</div>
+              <div class="col-lg-6 col-md-6">{{consultation.datetime_end_consultation}}</div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="row mb-2">
+              <div class="col-lg-6 col-md-6 fw-bold">Doctor</div>
+              <div class="col-lg-6 col-md-6">Dr. {{consultation.doctor.user.first_name}} {{consultation.doctor.user.last_name}}</div>
+            </div>
+          </div>
+          
+          
+            
+
+          
+        </div>
+
+          <hr>
+
+          <div class="row justify-content-center align-items-top g-2">
+
+            <div class="col">
+              <h5>Subjective</h5>
+              <p>{{consultation.subjective}}</p>
+
+              <h5>Objective</h5>
+              <p>{{consultation.objective}}</p>
+
+            </div>
+            <div class="col">
+              <h5>Vital signs</h5>
+              <div class="row mb-2">
+                <div class="col-lg-6 col-md-6 fw-bold">Temperature</div>
+                <div class="col-lg-6 col-md-6">{{consultation.temperature}}</div>
+              </div>
+
+              <div class="row mb-2">
+                <div class="col-lg-6 col-md-6 fw-bold">Hearth rate</div>
+                <div class="col-lg-6 col-md-6">{{consultation.hearthrate}} BPM</div>
+              </div>
+
+              <div class="row mb-2">
+                <div class="col-lg-6 col-md-6 fw-bold">Blood pressure</div>
+                <div class="col-lg-6 col-md-6">{{consultation.blood_pressure_systolic}}/{{consultation.blood_pressure_diastolic}} mmHg</div>
+              </div>
+
+              <div class="row mb-2">
+                <div class="col-lg-6 col-md-6 fw-bold">Saturation</div>
+                <div class="col-lg-6 col-md-6">{{consultation.saturation}}%</div>
+              </div>
+
+              <div class="row mb-2">
+                <div class="col-lg-6 col-md-6 fw-bold">Weight</div>
+                <div class="col-lg-6 col-md-6">{{consultation.weight}} kg</div>
+              </div>
+
+              <div class="row mb-2">
+                <div class="col-lg-6 col-md-6 fw-bold">Length</div>
+                <div class="col-lg-6 col-md-6">{{consultation.length}} cm</div>
+              </div>
+
+
+
+            </div>
+              
+
+            
+          </div>
+
+          <hr>
+
+          <div class="row justify-content-center align-items-top g-2">
+
+            <div class="col">
+              <h5>Diagnosis</h5>
+              <p>{{consultation.actual_disease.name}}</p>
+              
+
+            </div>
+            <div class="col">
+              <h5>Urgency</h5>
+              <p>{{consultation.actual_urgency}}</p>
+              
+
+
+
+            </div>
+              
+
+            
+          </div>
+
+          
+
+
+
+        {% endif %}
+
+      </div>
+      <div class="tab-pane fade" id="bordered-justified-differential-diagnosis" role="tabpanel" aria-labelledby="differential-diagnosis-tab">
+        
+        <table class="table datatable">
+          <thead>
+            <tr class="table-head">
+              <th scope="col">Disease</th>
+              <th scope="col">Snomed CT</th>
+              <th scope="col">ICD-10</th>
+              <th scope="col">iCPC-2 Plus</th>
+              <th scope="col">Likelihood</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for disease in disease_prediction_list %}
+              <tr>
+              <td>{{disease.disease.name}}</td>
+              <td>{{disease.disease.snomed_ct}}</td>
+              <td>{{disease.disease.icd10}}</td>
+              <td>{{disease.disease.icpc2p}}</td>
+
+              {% if disease.likelihood == 5 %}
+              <td>
+                <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+              </td>
+              {% elif disease.likelihood == 4 %}
+              <td>
+                <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+              </td>
+              {% elif disease.likelihood == 3 %}
+              <td>
+                <i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
+                <i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
+                <i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
+            </td>
+              {% elif disease.likelihood == 2 %}
+              <td>
+                <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+                <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+            </td>
+              {% elif disease.likelihood == 1 %}
+              <td>
+                <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+            </td>
+              {% endif %}
+          </tr>
+            {% endfor %}
+
+            
+          </tbody>
+        </table>
+
+      </div>
+
+      <div class="tab-pane fade" id="bordered-justified-digital-anamnesis" role="tabpanel" aria-labelledby="digital-anamnesis-tab">
+        <h5 class="mb-4">Anamnesis Q&A</h5>
+
+            {% for item in question_list %}
+              <h6 class="fw-bold mb-1">
+                  {{item.question}}
+              </h6>
+              <p>{{item.answer}}</p>
+            {% endfor %}
+      </div>
+    </div><!-- End Bordered Tabs Justified -->
+
+  </div>
+</div>
+
+
+
+{% endblock main %}

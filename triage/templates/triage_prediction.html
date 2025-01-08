@@ -1,0 +1,19 @@
+{% extends "triage_base.html" %}
+
+{% block main %}
+<div class="card text-start">
+  <div class="card-body">
+    <h4 class="card-title d-flex justify-content-center">Advice</h4>
+    <p class="card-text d-flex justify-content-center">
+        Based on the information you provided, we suggest you to...
+
+    </p>
+
+    <p class="card-text d-flex justify-content-center" style="font-size: xx-large;">
+        {{encounter.follow_up_code}}
+    </p>
+    
+    
+  </div>
+</div>
+{% endblock main %}

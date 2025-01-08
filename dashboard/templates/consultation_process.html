@@ -1,0 +1,321 @@
+{% extends "dashboard_base.html" %}
+
+{% block main %}
+
+<div class="card" style='min-height:400px'>
+    <div class="card-body">
+      <h5 class="card-title">Consultation</h5>
+
+      <!-- Bordered Tabs -->
+      <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="patient-tab" data-bs-toggle="tab" data-bs-target="#bordered-patient" type="button" role="tab" aria-controls="patient" aria-selected="true">1. Patient Information</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="anamnesis-tab" data-bs-toggle="tab" data-bs-target="#bordered-anamnesis" type="button" role="tab" aria-controls="anamnesis" aria-selected="false">2. Anamnesis</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="clinical-examination-tab" data-bs-toggle="tab" data-bs-target="#bordered-clinical-examination" type="button" role="tab" aria-controls="clinical-examination" aria-selected="false">3. Clinical Examination</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="diagnosis-tab" data-bs-toggle="tab" data-bs-target="#bordered-diagnosis" type="button" role="tab" aria-controls="diagnosis" aria-selected="false">4. Diagnosis</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="treatment-plan-tab" data-bs-toggle="tab" data-bs-target="#bordered-treatment-plan" type="button" role="tab" aria-controls="treatment-plan" aria-selected="false">5. Treatment Plan</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="overview-tab" data-bs-toggle="tab" data-bs-target="#bordered-overview" type="button" role="tab" aria-controls="overview" aria-selected="false">6. Overview</button>
+        </li>
+
+      </ul>
+      <form action="" method="post">
+      <div class="tab-content pt-2" id="borderedTabContent">
+        {% csrf_token %}
+
+        
+
+        <div class="tab-pane fade active show" id="bordered-patient" role="tabpanel" aria-labelledby="patient-tab">
+          
+            <div class="row justify-content-center align-items-top g-2 mt-4">
+                <div class="col-6">
+
+                    <div class="mb-3">
+                      <label for="" class="form-label">First Name</label>
+                      <input type="text"
+                        class="form-control" name="first_name" id="first_name" aria-describedby="helpId" placeholder="" value="{{consultation.encounter.patient.first_name}}" readonly>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="" class="form-label">Gender</label>
+                        <select class="form-select form-select" name="gender" id="gender" disabled>
+                            <option value = "{{consultation.encounter.patient.gender}}" selected>{{consultation.encounter.patient.gender}}</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-6">
+
+                    <div class="mb-3">
+                      <label for="" class="form-label">Last Name</label>
+                      <input type="text"
+                        class="form-control" name="last_name" id="last_name" placeholder="" value="{{consultation.encounter.patient.last_name}}" readonly>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="" class="form-label">Date of birth</label>
+                        <input type="date" class="form-control" name="date_of_birth" id="date_of_birth" value = "{{consultation.encounter.patient.date_of_birth}}" readonly>
+                    </div>
+
+                </div>
+
+                
+
+                
+                
+
+            </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="bordered-anamnesis" role="tabpanel" aria-labelledby="anamnesis-tab">
+            <div class="row justify-content-center align-items-top g-2 mt-4">
+                <div class="col-6 pe-4">
+                    <h5>Extra information</h5>
+                    <textarea class="form-control" name="subjective" placeholder="Register extra information here" id="subjective" style="height: 100px;"></textarea>
+
+                </div>
+
+                <div class="col-6">
+
+                    <h5>Digital Anamnesis</h5>
+
+                    
+
+                        {% for item in question_list %}
+                        <h6 class="fw-bold mb-1">
+                            {{item.question}}
+                        </h6>
+                        <p>{{item.answer}}</p>
+                    {% endfor %}
+                    
+                    
+
+
+                </div>
+
+                
+                
+
+            </div>
+        </div>
+
+
+        <div class="tab-pane fade" id="bordered-clinical-examination" role="tabpanel" aria-labelledby="clinical-examination-tab">
+            <div class="row justify-content-center align-items-top g-2 mt-4">
+                <h5>Vital signs</h5>
+
+                <div class="col-6 pe-4">
+                    
+                    <div class="mb-3">
+                      <label for="temperature" class="form-label">Temperature</label>
+                      <input type="number"
+                        class="form-control" name="temperature" id="temperature"  placeholder="°C" max="100" step=0.1>
+                      
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="hearthrate" class="form-label">Hearthrate</label>
+                      <input type="number"
+                        class="form-control" name="hearthrate" id="hearthrate"  placeholder="bpm" min="0">
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="saturation" class="form-label">Saturation</label>
+                      <input type="number"
+                        class="form-control" name="saturation" id="saturation" placeholder="%" min="0" max="100">
+                    </div>
+
+                </div>
+
+                <div class="col-6">
+
+                    <label for="blood_pressure_systolic" class="form-label">Blood Pressure</label>
+                    <div class="input-group mb-3">
+                        
+                        <input type="number" class="form-control" name="blood_pressure_systolic" id="blood_pressure_systolic" min="0" placeholder="Systolic mmHg">
+                        <input type="number" class="form-control" name="blood_pressure_diastolic" id="blood_pressure_diastolic" min="0" placeholder="Diastolic mmHg">
+                    </div>
+                    
+
+                    <div class="mb-3">
+                      <label for="weight" class="form-label">Weight</label>
+                      <input type="number"
+                        class="form-control" name="weight" id="weight" placeholder="kg" min="0" step="0.01">
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="length" class="form-label">length</label>
+                      <input type="number"
+                        class="form-control" name="length" id="length" step="1" min="0" aria-describedby="helpId" placeholder="cm">
+                      
+                    </div>
+
+
+
+
+                </div>
+
+                
+            </div>
+
+            <div class="row justify-content-center align-items-top g-2 mt-4">
+                <h5>Additional Information</h5>
+                
+                <textarea class="form-control" placeholder="Additional information of clinical examination" id="objective" name="objective" style="height: 100px;"></textarea>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="tab-pane fade" id="bordered-diagnosis" role="tabpanel" aria-labelledby="diagnosis-tab">
+            <div class="row justify-content-center align-items-top g-2 mt-4">
+                <div class="col-6 pe-4">
+                    
+                    <h5>Actual</h5>
+
+                    <div class="mb-3">
+                        <label for="" class="form-label">Disease</label>
+                        <select class="form-select" name="disease" id="disease">
+                            <option selected>Select one</option>
+                            {% for disease in disease_list %}
+                            <option value="{{disease.pk}}">{{disease.name}}</option>
+                            {% endfor %}
+                            
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="" class="form-label">Urgency</label>
+                        <select class="form-select" name="urgency" id="urgency">
+                            <option selected>Select one</option>
+                            <option value="1">Lifethreathening</option>
+                            <option value="2">Emergency</option>
+                            <option value="3">Urgent</option>
+                            <option value="4">Routine</option>
+                            <option value="5">Not-urgent</option>
+                        </select>
+                    </div>
+                    
+                </div>
+
+                <div class="col-6">
+
+                    <h5>Predicted</h5>
+
+                    <table class="table table-borderless">
+                        <thead>
+                          <tr class="table-secondary">
+                            <th scope="col">Disease</th>
+                            <th scope="col">Likelihood</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for disease in disease_prediction_list %}
+                            <tr>
+                            <td><a href="#" class="text-primary fw-bold">{{disease.disease.name}}</a></td>
+        
+                            {% if disease.likelihood == 5 %}
+                            <td>
+                              <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                              <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                              <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                              <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                              <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                            </td>
+                            {% elif disease.likelihood == 4 %}
+                            <td>
+                              <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                              <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                              <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                              <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                            </td>
+                            {% elif disease.likelihood == 3 %}
+                            <td>
+                              <i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
+                              <i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
+                              <i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
+                          </td>
+                            {% elif disease.likelihood == 2 %}
+                            <td>
+                              <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+                              <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+                          </td>
+                            {% elif disease.likelihood == 1 %}
+                            <td>
+                              <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+                          </td>
+                            {% endif %}
+                        </tr>
+                          {% endfor %}
+        
+                          
+                        </tbody>
+                      </table>
+
+
+
+
+                </div>
+
+                
+                
+
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="bordered-treatment-plan" role="tabpanel" aria-labelledby="treatment-plan-tab">
+            <div class="row justify-content-center align-items-top g-2 mt-4">
+                <div class="col-6">
+                    
+                    <h5>Medication</h5>
+                    <p>Work in progress</p>
+
+
+                    
+
+                </div>
+
+                <div class="col-6">
+
+                    <h5>Referal</h5>
+
+                    <p>Work in progress</p>
+
+
+
+                </div>
+
+                
+                
+
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="bordered-overview" role="tabpanel" aria-labelledby="overview-tab">
+            <div class="d-grid gap-2 justify-content-center">
+              <button type="submit" name="" id="" class="btn btn-primary">Save consultation</button>
+            </div>
+        </div>
+
+        
+
+    </div>
+
+
+
+{% endblock main %}

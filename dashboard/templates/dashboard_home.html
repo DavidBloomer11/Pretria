@@ -1,0 +1,128 @@
+{% extends "dashboard_base.html" %}
+
+{% load static %}
+
+
+{% block main %}
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div>
+
+
+  <div class="col-lg-12">
+    <div class="row">
+
+      <!-- Queries Card -->
+      <div class="col-xxl-4 col-md-6">
+        <div class="card info-card sales-card">
+
+          <div class="card-body">
+            <h5 class="card-title">Consultations <span>| Today</span></h5>
+
+            <div class="d-flex align-items-center">
+              
+              <div class="ps-3">
+                <h4>{{number_of_consultations_today}}</h4>
+                
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- End Queries Card -->
+
+      <!-- Queries Card -->
+      <div class="col-xxl-4 col-md-6">
+        <div class="card info-card sales-card">
+
+          <div class="card-body">
+            <h5 class="card-title">In waiting room</h5>
+
+            <div class="d-flex align-items-center">
+              
+              <div class="ps-3">
+                <h4>{{number_in_waiting_room}}</h4>
+                
+                
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- End Queries Card -->
+
+      <!-- Queries Card -->
+      <div class="col-xxl-4 col-md-6">
+        <div class="card info-card sales-card">
+
+          <div class="card-body">
+            <h5 class="card-title">Average consultation time <span>| All time</span></h5>
+
+            <div class="d-flex align-items-center">
+              
+              <div class="ps-3">
+                <h4>{{average_consultation_time}}</h4>
+                
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- End Queries Card -->
+
+      
+      <div class="col-12">
+        <div class="card top-selling overflow-auto">
+          <div class="card-body pb-0">
+            <h5 class="card-title">Waiting room</h5>
+    
+            <table class="table datatable">
+              <thead>
+                <tr>
+                  <th scope="col">Patient</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Predicted Urgency</th>
+                  <th scope="col">Possible Diseases</th>
+                  <th scope="col">Time Registered</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {% for consultation in waiting_room_list %}
+                <tr>
+                  <td><a name="" id="" class="btn-sm btn-outline-primary" href="{% url 'consultation' medical_practice.pk consultation.pk %}" role="button">{{consultation.encounter.patient.first_name}} {{consultation.encounter.patient.last_name}}</a></td>
+                  <td>{{consultation.encounter.gender}}</td>
+                  <td>{{consultation.encounter.age}}</td>
+                  <td>{{consultation.encounter.urgency_prediction}}</td>
+                  <td>{{consultation.disease_list.0.disease.name}}, {{consultation.disease_list.1.disease.name}}</td>
+                  <td>{{consultation.datetime_registered |date:"d/m/Y G:i"}}</td>
+                  <td><a name="" id="" class="btn-sm btn-outline-primary" href="{% url 'perform_consultation' medical_practice.pk consultation.pk %}" role="button">Start consultation</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+    
+          </div>
+    
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  
+
+
+{% endblock main %}

@@ -1,0 +1,41 @@
+{% extends "triage_base.html" %}
+{% load static %}
+
+{% block main %}
+<div class="card text-start">
+  <div class="card-body">
+    <h4 class="card-title">Additional questions</h4>
+
+    <form action="" method="POST" id="query_form">
+        {% csrf_token %}
+            {% for question in question_list %}
+            <div class="row mt-4">
+              <div class="col">
+                  <label for="query" class="form-label">{{forloop.counter}}. {{question.question}}</label>
+
+                  {% if question.answer_type == 'bool' %}
+                  <select class="form-select" aria-label="Default select example" required name='{{question.pk}}'>
+                    <option selected="">Open this select menu</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    </select>
+                  {% elif question.answer_type == 'str' %}
+                  <input type="text" class="form-control" required name='{{question.pk}}'>
+                  {% else %}
+                  <input type="number" class="form-control" required name='{{question.pk}}'>
+                  {% endif %}
+                
+                  
+              </div>
+            </div>
+          {% endfor %}
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary mt-2">Next</button>
+          </div>
+  
+      </form>
+    
+  </div>
+</div>
+{% endblock main %}

@@ -1,0 +1,121 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+
+{% block main %}
+<div class="pagetitle">
+    <h1>Consultation</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item"><a href="/dashboard">Consultations</a></li>
+        <li class="breadcrumb-item active"></li>
+      </ol>
+    </nav>
+</div>
+
+<div class="card text-start">
+  <div class="card-body">
+    
+    <div class="row">
+        <div class="col-xl-8">
+            <h5 class="card-title">General information</h5>
+
+            <div class="row mt-2">
+                <div class="col-lg-4 col-md-4"><p class="fw-bold mb-1">Name:</p></div>
+                <div class="col-lg-8 col-md-8">{{consultation.encounter.patient.first_name}} {{consultation.encounter.patient.last_name}}</div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-lg-4 col-md-4"><p class="fw-bold mb-1">Gender:</p></div>
+                <div class="col-lg-8 col-md-8">{{consultation.encounter.gender}}</div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-lg-4 col-md-4"><p class="fw-bold mb-1">Age:</p></div>
+                <div class="col-lg-8 col-md-8">{{consultation.encounter.age}}</div>
+            </div>
+
+            <div class="row mt-2">
+              <div class="col-lg-4 col-md-4"><p class="fw-bold mb-1">Citizen service number:</p></div>
+              <div class="col-lg-8 col-md-8">{{consultation.encounter.patient.citizen_service_number}}</div>
+          </div>
+
+            <h5 class="card-title">Symptom description</h5>
+            <p>
+                {{consultation.encounter.description}}
+            </p>
+
+            <h5 class="card-title">Anamnesis</h5>
+
+            {% for item in question_list %}
+              <h6 class="fw-bold mb-1">
+                  {{item.question}}
+              </h6>
+              <p>{{item.answer}}</p>
+            {% endfor %}
+
+
+        </div>
+        <div class="col-xl-4 mt-4">
+            <h5>Diagnosis</h5>
+
+            <table class="table table-borderless">
+                <thead>
+                  <tr class="table-secondary">
+                    <th scope="col">Disease</th>
+                    <th scope="col">Likelihood</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for disease in disease_prediction_list %}
+                    <tr>
+                    <td><a href="#" class="text-primary fw-bold">{{disease.disease.name}}</a></td>
+
+                    {% if disease.likelihood == 5 %}
+                    <td>
+                      <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                      <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                      <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                      <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                      <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                    </td>
+                    {% elif disease.likelihood == 4 %}
+                    <td>
+                      <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                      <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                      <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                      <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                    </td>
+                    {% elif disease.likelihood == 3 %}
+                    <td>
+                      <i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
+                      <i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
+                      <i class="bi bi-circle-fill activity-badge text-warning align-self-start"></i>
+                  </td>
+                    {% elif disease.likelihood == 2 %}
+                    <td>
+                      <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+                      <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+                  </td>
+                    {% elif disease.likelihood == 1 %}
+                    <td>
+                      <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+                  </td>
+                    {% endif %}
+                </tr>
+                  {% endfor %}
+
+                  
+                </tbody>
+              </table>
+            
+
+        </div>
+        
+    </div>
+
+    
+  </div>
+</div>
+
+{% endblock main %}

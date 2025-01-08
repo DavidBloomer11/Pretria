@@ -1,0 +1,67 @@
+{% extends "triage_base.html" %} {% load static %} {% block main %}
+{% load static %}
+
+<div class="container">
+  {% if success %}
+  <div class="alert alert-success" role="alert">
+    {{success}} You can take a seat in the waiting room.
+  </div>
+
+  {% elif error %}
+
+  <div class="alert alert-danger" role="alert">{{error}}</div>
+
+  {% endif %}
+
+  <div class="card text-start">
+    <div class="card-body text-center">
+      <h4 class="card-title">
+        Register consultation by providing following information:
+      </h4>
+
+      <form action="" method="POST">
+        {% csrf_token %}
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" required maxlength="8" name="follow_up_code" oninput="this.value = this.value.toUpperCase()"/>
+          <label for="floatingInput" class="text-center">Follow-up code (example: JHSPDMQO)</label>
+        </div>
+
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" required name="citizen_service_number" id="citizen_service_number" maxlength="15" oninput="addDots()"/>
+          <label for="floatingInput" class="text-center">Citizen service number</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register Consultation</button>
+      </form>
+
+      <script>
+        function addDots() {
+          const input = document.getElementById('citizen_service_number');
+          const inputValue = input.value;
+    
+          // Remove non-digit characters from input
+          const digitsOnly = inputValue.replace(/\D/g, '');
+    
+          // Format the digits
+          let formattedValue = '';
+          for (let i = 0; i < digitsOnly.length; i++) {
+            if (i === 2 || i === 4 || i === 6 || i === 9) {
+              formattedValue += `.${digitsOnly[i]}`;
+            } else if (i === 11) {
+              formattedValue += `-${digitsOnly[i]}`;
+            } else {
+              formattedValue += digitsOnly[i];
+            }
+          }
+    
+          // Update the input value
+          input.value = formattedValue;
+        }
+      </script>
+    </div>
+  </div>
+</div>
+
+{% endblock main %}

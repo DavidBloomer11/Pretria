@@ -1,0 +1,71 @@
+html {
+	width: 100%;
+  }
+
+  body {
+	font-family: Arial, sans-serif;
+  margin-bottom: 70px;
+  background: linear-gradient(to bottom, rgb(218, 206, 253) 0%, rgb(247, 244, 253) 50%, rgb(218, 206, 253) 100%);
+  }
+
+  .container {
+    max-width: 1000px;
+  }
+  .wrapper {
+    flex: 1;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+    background-color: white;
+}
+
+/*Types text animation */
+
+  .typed-text {
+    display: inline-block;
+    overflow: hidden;
+    /* Ensures the content is not revealed until the animation */
+    border-right: .15em solid rgb(0, 0, 0);
+    /* The typewriter cursor */
+    white-space: nowrap;
+    /* Keeps the content on a single line */
+    margin: 0 auto;
+    /* Gives that scrolling effect as the typing happens */
+    
+    /* Adjust as needed */
+    animation:
+        typing 3s steps(30, end),
+        blink-caret .75s step-end infinite;
+}
+
+/* The typing animation */
+@keyframes typing {
+  from {
+      width: 0
+  }
+
+  to {
+      width: 70%
+  }
+}
+
+/* The typewriter cursor animation */
+@keyframes blink-caret {
+
+  from,
+  to {
+      border-color: transparent
+  }
+
+  50% {
+      border-color: rgb(0, 0, 0)
+  }
+}
+
+.text-muted {
+  color:rgb(158, 158, 158);
+}

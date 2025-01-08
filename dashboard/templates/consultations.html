@@ -1,0 +1,68 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+<!-- Title -->
+{% block title %}Consultations{% endblock title %}
+
+{% block main %}
+<div class="pagetitle">
+    <h1>Consultations</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard' medical_practice.pk %}">Home</a></li>
+        <li class="breadcrumb-item active">Consultations</li>
+      </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+  <section class="section dashboard">
+    <div class="row">
+
+      <!-- Left side columns -->
+      <div class="col-lg-12">
+        <div class="row">
+
+          
+          <div class="col-12">
+            <div class="card overflow-auto">
+
+              <div class="card-body">
+                <h5 class="card-title">Consultations</h5>
+
+                <table class="table table-borderless datatable">
+                  <thead>
+                    <tr>
+                      <th scope="col">Patient</th>
+                      <th scope="col">Registered</th>
+                      <th scope="col">Doctor</th>
+                      <th scope="col">Diagnosis</th>
+                      <th scope="col">Predicted urgency</th>
+                      <th scope="col">Actual Urgency</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for consultation in consultation_list %}
+                    <tr>
+                        <td><a href="{% url 'consultation' medical_practice.pk consultation.pk %}">{{consultation.encounter.patient.first_name}} {{consultation.encounter.patient.last_name}}</td>
+                        <td>{{consultation.datetime_registered}}</td>
+                        <td>{{consultation.doctor.user.first_name}} {{consultation.doctor.user.last_name}}</td>
+                        <td>{{consultation.actual_disease}}</td>
+                        <td>{{consultation.encounter.urgency_prediction}}</td>
+                        <td>{{consultation.actual_urgency}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                
+              </div>
+
+            </div>
+          </div>
+          <!-- End Recent Sales -->
+
+        </div>
+      </div><!-- End Left side columns -->
+
+    </div>
+  </section>
+{% endblock main %}
